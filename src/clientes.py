@@ -7,19 +7,8 @@
 from conexion import bd
 
 
-def Grabarcli(dni, apel, nom, dire, loc, prov, cp, mov, tel, mail, si):
-    dni = dni.get_text()
-    apel = apel.get_text()
-    print(apel)
-    nom = nom.get_text()
-    dire = dire.get_text()
-    loc = loc.get_text()
-    prov = prov.get_text()
-    cp = cp.get_text()
-    mov = mov.get_text()
-    tel = tel.get_text()
-    mail = mail.get_text()
-
+def Grabarcli(dni, apel, nom, dire, loc, prov, cp, mov, tel, mail, no):
+    
 
 
 def validoDNI(dni):

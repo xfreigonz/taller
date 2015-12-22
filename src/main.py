@@ -81,7 +81,22 @@ class main:
         self.ventanaNeocli.hide()
 
     def on_btnGrabcli_clicked(self, widget):
-        clientes.Grabarcli(self.ednicli, self.apelcli, self.nomcli, self.dircli, self.loccli, self.provcli, self.cpcli, self.movcli, self.telcli, self.mailcli, 1)
+        dni = self.dni.get_text()
+        apel = self.apelcli.get_text()
+        nom = nom.get_text()
+    dire = dire.get_text()
+    loc = loc.get_text()
+    prov = prov.get_text()
+    cp = cp.get_text()
+    mov = mov.get_text()
+    tel = tel.get_text()
+    mail = mail.get_text()
+    if no.get_active:
+        pub = 1
+    else:
+        pub = no
+
+        clientes.Grabarcli(dnicli, self.apelcli, self.nomcli, self.dircli, self.loccli, self.provcli, self.cpcli, self.movcli, self.telcli, self.mailcli, self.nocli)
 
 if __name__ == "__main__":
     main = main()
