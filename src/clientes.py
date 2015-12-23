@@ -44,8 +44,9 @@ def validoDNI(dni):
     return False
 
 def mostrar(lista, trewCliente):
+    lista.clear()
     cursor = bd.cursor()
-    sql = """ SELECT apelcli, nomcli, movcli FROM clientes """
+    sql = """ SELECT dnicli, apelcli, nomcli, movcli FROM clientes ORDER BY apelcli"""
     cursor.execute(sql)
     datos = cursor.fetchall()
     datos = filter(None, datos)
@@ -55,3 +56,11 @@ def mostrar(lista, trewCliente):
         else:
             print"error"
         trewCliente.show()
+
+def Borrarcli(dni):
+    dni = str(dni)
+    cursor = bd.cursor()
+    cursor.execute(""" DELETE FROM clientes WHERE dnicli=? """, (dni,))
+    bd.commit()
+    
+    

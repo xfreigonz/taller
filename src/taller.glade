@@ -4,11 +4,13 @@
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkListStore" id="listCiente">
     <columns>
-      <!-- column-name apellidos -->
+      <!-- column-name Dni -->
       <column type="gchararray"/>
-      <!-- column-name nombre -->
+      <!-- column-name Apellidos -->
       <column type="gchararray"/>
-      <!-- column-name movil -->
+      <!-- column-name Nombre -->
+      <column type="gchararray"/>
+      <!-- column-name Movil -->
       <column type="gchararray"/>
     </columns>
   </object>
@@ -255,8 +257,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button1">
-                    <property name="label" translatable="yes">button</property>
+                  <object class="GtkButton" id="btnBorrarcli">
+                    <property name="label" translatable="yes">Eliminar</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -264,6 +266,9 @@
                     <property name="margin_right">2</property>
                     <property name="margin_top">5</property>
                     <property name="margin_bottom">5</property>
+                    <property name="relief">none</property>
+                    <property name="yalign">0.47999998927116394</property>
+                    <signal name="clicked" handler="on_btnBorrarcli_clicked" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -343,12 +348,13 @@
                             <property name="margin_bottom">2</property>
                             <property name="model">listCiente</property>
                             <property name="enable_grid_lines">both</property>
+                            <signal name="cursor-changed" handler="on_trwCliente_cursor_changed" swapped="no"/>
                             <child internal-child="selection">
                               <object class="GtkTreeSelection" id="treeview-selection1"/>
                             </child>
                             <child>
                               <object class="GtkTreeViewColumn" id="treeviewcolumn2">
-                                <property name="title" translatable="yes">APELLIDOS</property>
+                                <property name="title" translatable="yes">DNI</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext2"/>
                                   <attributes>
@@ -359,7 +365,7 @@
                             </child>
                             <child>
                               <object class="GtkTreeViewColumn" id="treeviewcolumn3">
-                                <property name="title" translatable="yes">NOMBRE</property>
+                                <property name="title" translatable="yes">APELLIDOS</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext3"/>
                                   <attributes>
@@ -370,11 +376,22 @@
                             </child>
                             <child>
                               <object class="GtkTreeViewColumn" id="treeviewcolumn4">
-                                <property name="title" translatable="yes">MOVIL</property>
+                                <property name="title" translatable="yes">NOMBRE</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext4"/>
                                   <attributes>
                                     <attribute name="text">2</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="treeviewcolumn1">
+                                <property name="title" translatable="yes">MOVIL</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                                  <attributes>
+                                    <attribute name="text">3</attribute>
                                   </attributes>
                                 </child>
                               </object>

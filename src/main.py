@@ -39,6 +39,7 @@ class main:
         self.btnAceptar = b.get_object("btnAceptar")
         self.listCliente = b.get_object("listCiente")
         self.trewCliente = b.get_object("trwCliente")
+        self.btnBorrarcli = b.get_object("btnBorrarcli")
         self.ventanaPrincipal.show()
         clientes.mostrar(self.listCliente, self.trewCliente)
 
@@ -50,13 +51,25 @@ class main:
             "on_ventanaNeocli_delete_event": self.on_ventanaNeocli_delete_event,
             "on_entDni_focus_out_event": self.on_entDni_focus_out_event,
             "on_btnAceptar_clicked": self.on_btnAceptar_clicked,
-            "on_rbtNo_toggled": self.on_rbtNo_toggled
+            "on_rbtNo_toggled": self.on_rbtNo_toggled,
+            "on_btnBorrarcli_clicked": self.on_btnBorrarcli_clicked,
+            "on_trwCliente_cursor_changed": self.on_trwCliente_cursor_changed
             }
 
         b.connect_signals(dic)
 
 #declaracion de funciones
-
+    
+    def on_trwCliente_cursor_changed(self, widget, Data = None):
+        self.seleccion = self.trewCliente.get_selection()
+        model, iter = self.seleccion.get_selected()
+        self.data = model[iter][0]
+        self.data = str(self.data)
+                            
+    def on_btnBorrarcli_clicked(self, widget):
+        clientes.Borrarcli(self.data)
+        clientes.mostrar(self.listCliente, self.trewCliente)
+    
     def on_btnNeocli_clicked(self, widget, data=None):
         self.ventanaNeocli.show()
         self.pub = "no"
@@ -91,8 +104,7 @@ class main:
             self.pub = "no"
         else:
             self.pub = "si"
-              
-        
+             
     def on_btnGrabcli_clicked(self, widget):
         self.dni = self.dnicli.get_text()
         self.apel = self.apelcli.get_text()
@@ -109,7 +121,7 @@ class main:
             self.avisodni.show()
             
         clientes.limpiarcli(self.dnicli, self.apelcli, self.nomcli, self.dircli, self.loccli, self.provcli, self.cpcli, self.movcli, self.telcli, self.mailcli)
-        clientes.mostrar(listCliente, trewCliente)
+        clientes.mostrar(self.listCliente, self.trewCliente)
 
 if __name__ == "__main__":
     main = main()
