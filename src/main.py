@@ -23,7 +23,7 @@ class main:
         self.btnGrabcli = b.get_object("btnGrabcli")
         self.btnSalir = b.get_object("btnSalir")
         self.listCliente = b.get_object("listCliente")
-        self.ednicli = b.get_object("entDni")
+        self.dnicli = b.get_object("entDni")
         self.apelcli = b.get_object("entApel")
         self.nomcli = b.get_object("entNom")
         self.dircli = b.get_object("entDir")
@@ -37,7 +37,10 @@ class main:
         self.nocli = b.get_object("rtbNo")
         self.avisodni = b.get_object("dlgAvis")
         self.btnAceptar = b.get_object("btnAceptar")
+        self.listCliente = b.get_object("listCiente")
+        self.trewCliente = b.get_object("trwCliente")
         self.ventanaPrincipal.show()
+        clientes.mostrar(self.listCliente, self.trewCliente)
 
         dic = {"on_btnNeocli_clicked": self.on_btnNeocli_clicked,
             "on_btnSalir_clicked": self.on_btnSalir_clicked,
@@ -46,7 +49,8 @@ class main:
             "on_ventanaPrincipal_destroy": self.on_ventanaPrincipal_destroy,
             "on_ventanaNeocli_delete_event": self.on_ventanaNeocli_delete_event,
             "on_entDni_focus_out_event": self.on_entDni_focus_out_event,
-            "on_btnAceptar_clicked": self.on_btnAceptar_clicked
+            "on_btnAceptar_clicked": self.on_btnAceptar_clicked,
+            "on_rbtNo_toggled": self.on_rbtNo_toggled
             }
 
         b.connect_signals(dic)
@@ -55,6 +59,7 @@ class main:
 
     def on_btnNeocli_clicked(self, widget, data=None):
         self.ventanaNeocli.show()
+        self.pub = "no"
 
     def on_btnSalir_clicked(self, widget):
         Gtk.main_quit()
@@ -67,36 +72,44 @@ class main:
         return True
 
     def on_btnAceptar_clicked(self, widget):
-        self.ventanaNeocli.hide()
+        self.avisodni.hide()
+        return True
 
     def on_entDni_focus_out_event(self, widget, Data=None):
-        self.dnicli = self.ednicli.get_text()
-        self.dnicli = self.dnicli.upper()
-        self.ednicli.set_text(self.dnicli)
-        if (clientes.validoDNI(self.dnicli) is False and self.dnicli != ""):
+        self.dni = self.dnicli.get_text()
+        self.dni = self.dni.upper()
+        self.dnicli.set_text(self.dni)
+        if (clientes.validoDNI(self.dni) is False and self.dni != ""):
             self.avisodni.show()
-            self.ednicli.set_text("")
+            self.dnicli.set_text("")
 
     def on_btnSalircli_clicked(self, widget, Data=None):
         self.ventanaNeocli.hide()
 
+    def on_rbtNo_toggled(self, widget, Data=None):
+        if widget.get_active():
+            self.pub = "no"
+        else:
+            self.pub = "si"
+              
+        
     def on_btnGrabcli_clicked(self, widget):
-        dni = self.dni.get_text()
-        apel = self.apelcli.get_text()
-        nom = nom.get_text()
-    dire = dire.get_text()
-    loc = loc.get_text()
-    prov = prov.get_text()
-    cp = cp.get_text()
-    mov = mov.get_text()
-    tel = tel.get_text()
-    mail = mail.get_text()
-    if no.get_active:
-        pub = 1
-    else:
-        pub = no
-
-        clientes.Grabarcli(dnicli, self.apelcli, self.nomcli, self.dircli, self.loccli, self.provcli, self.cpcli, self.movcli, self.telcli, self.mailcli, self.nocli)
+        self.dni = self.dnicli.get_text()
+        self.apel = self.apelcli.get_text()
+        self.nom = self.nomcli.get_text()
+        self.dir = self.dircli.get_text()
+        self.loc = self.loccli.get_text()
+        self.prov = self.provcli.get_text()
+        self.cp = self.cpcli.get_text()
+        self.mov = self.movcli.get_text()
+        self.tel = self.telcli.get_text()
+        self.mail = self.mailcli.get_text()
+              
+        if clientes.Grabarcli(self.dni, self.apel, self.nom, self.dir, self.loc, self.prov, self.cp, self.mov, self.tel, self.mail, self.pub) == False:
+            self.avisodni.show()
+            
+        clientes.limpiarcli(self.dnicli, self.apelcli, self.nomcli, self.dircli, self.loccli, self.provcli, self.cpcli, self.movcli, self.telcli, self.mailcli)
+        clientes.mostrar(listCliente, trewCliente)
 
 if __name__ == "__main__":
     main = main()

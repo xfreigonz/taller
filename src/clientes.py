@@ -7,9 +7,27 @@
 from conexion import bd
 
 
-def Grabarcli(dni, apel, nom, dire, loc, prov, cp, mov, tel, mail, no):
-    
 
+def Grabarcli(dni, apel, nom, dir, loc, pro, cp, mov, tel, mail, no):
+    cursor = bd.cursor()
+    registro = (dni, apel, nom, dir, loc, pro, cp, mov, tel, mail, no)
+    if dni != "" and  apel != "":
+        cursor.executemany("""INSERT INTO clientes(dnicli,apelcli,nomcli,dircli,poblic,procli,cpcli,movcli,telcli,mailcli,pubcli) VALUES (?,?,?,?,?,?,?,?,?,?,?);""", (registro,))
+        bd.commit()
+    else:
+       return False
+
+def limpiarcli(dni, apel, nom, dir, loc, pro, cp, mov, tel, mail):
+    dni.set_text("")
+    apel.set_text("")
+    dir.set_text("")
+    nom.set_text("")
+    loc.set_text("")
+    pro.set_text("")
+    cp.set_text("")
+    mov.set_text("")
+    tel.set_text("")
+    mail.set_text("")
 
 def validoDNI(dni):
     tabla = "TRWAGMYFPDXBNJZSQVHLCKE"
@@ -24,3 +42,16 @@ def validoDNI(dni):
             dni = dni.replace(dni[0], reemp_dig_ext[dni[0]])
         return len(dni) == len([n for n in dni if n in numeros]) and tabla[int(dni)%23] == dig_control
     return False
+
+def mostrar(lista, trewCliente):
+    cursor = bd.cursor()
+    sql = """ SELECT apelcli, nomcli, movcli FROM clientes """
+    cursor.execute(sql)
+    datos = cursor.fetchall()
+    datos = filter(None, datos)
+    for fila in datos:
+        if fila != None:
+            lista.append(fila)
+        else:
+            print"error"
+        trewCliente.show()

@@ -10,8 +10,6 @@
       <column type="gchararray"/>
       <!-- column-name movil -->
       <column type="gchararray"/>
-      <!-- column-name id -->
-      <column type="gchararray"/>
     </columns>
   </object>
   <object class="GtkWindow" id="ventanaPrincipal">
@@ -349,23 +347,12 @@
                               <object class="GtkTreeSelection" id="treeview-selection1"/>
                             </child>
                             <child>
-                              <object class="GtkTreeViewColumn" id="treeviewcolumn1">
-                                <property name="title" translatable="yes">ID</property>
-                                <child>
-                                  <object class="GtkCellRendererText" id="cellrenderertext1"/>
-                                  <attributes>
-                                    <attribute name="text">8</attribute>
-                                  </attributes>
-                                </child>
-                              </object>
-                            </child>
-                            <child>
                               <object class="GtkTreeViewColumn" id="treeviewcolumn2">
                                 <property name="title" translatable="yes">APELLIDOS</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext2"/>
                                   <attributes>
-                                    <attribute name="text">1</attribute>
+                                    <attribute name="text">0</attribute>
                                   </attributes>
                                 </child>
                               </object>
@@ -376,7 +363,7 @@
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext3"/>
                                   <attributes>
-                                    <attribute name="text">2</attribute>
+                                    <attribute name="text">1</attribute>
                                   </attributes>
                                 </child>
                               </object>
@@ -387,7 +374,7 @@
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext4"/>
                                   <attributes>
-                                    <attribute name="text">7</attribute>
+                                    <attribute name="text">2</attribute>
                                   </attributes>
                                 </child>
                               </object>
@@ -427,13 +414,15 @@
   </object>
   <object class="GtkApplicationWindow" id="ventanaNeocli">
     <property name="can_focus">False</property>
-    <property name="margin_left">2</property>
-    <property name="margin_right">2</property>
-    <property name="margin_top">2</property>
-    <property name="margin_bottom">2</property>
-    <property name="title" translatable="yes">tallerauto</property>
+    <property name="margin_left">5</property>
+    <property name="margin_right">5</property>
+    <property name="margin_top">5</property>
+    <property name="margin_bottom">5</property>
+    <property name="title" translatable="yes">TALLERAUTO S.L.</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="default_width">400</property>
+    <property name="default_height">300</property>
     <property name="destroy_with_parent">True</property>
     <property name="gravity">center</property>
     <property name="transient_for">ventanaPrincipal</property>
@@ -442,10 +431,10 @@
       <object class="GtkGrid" id="grid4">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="margin_left">5</property>
-        <property name="margin_right">5</property>
-        <property name="margin_top">5</property>
-        <property name="margin_bottom">5</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>
         <child>
@@ -755,6 +744,7 @@
                 <property name="xalign">0</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
+                <signal name="toggled" handler="on_rbtNo_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -772,6 +762,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">PUBLICIDAD:</property>
+            <property name="justify">fill</property>
+            <property name="wrap">True</property>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -882,11 +874,10 @@
             <property name="margin_bottom">9</property>
             <property name="vexpand">True</property>
             <property name="yalign">0.55000001192092896</property>
-            <property name="label" translatable="yes">DNI 
-INCORRECTO</property>
+            <property name="label" translatable="yes">DNI INCORRECTO O FALTA DNI</property>
             <property name="justify">center</property>
             <attributes>
-              <attribute name="font-desc" value="Century Schoolbook L Medium 20"/>
+              <attribute name="font-desc" value="Century Schoolbook L Medium 12"/>
               <attribute name="weight" value="semibold"/>
               <attribute name="foreground" value="#a4a400000000"/>
             </attributes>
