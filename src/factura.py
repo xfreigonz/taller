@@ -24,7 +24,7 @@ def limpiarfac(idfac, dnifac, matrifac, marcafac, modelfac, fechafac):
 def mostrar(listafac, trewFactura):
     listafac.clear()
     cursor = bd.cursor()
-    sql = """ SELECT idfac, dnifac, matrifac, marcafac, modelfac, fechafac FROM facturas ORDER BY marcafac"""
+    sql = """ SELECT idfac, dnifac, matrifac, marcafac, modelfac, fechafac FROM facturas ORDER BY dnifac"""
     cursor.execute(sql)
     datos = cursor.fetchall()
     datos = filter(None, datos)

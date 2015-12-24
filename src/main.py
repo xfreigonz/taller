@@ -67,10 +67,11 @@ class main:
             "on_rbtNo_toggled": self.on_rbtNo_toggled,
             "on_btnBorrarcli_clicked": self.on_btnBorrarcli_clicked,
             "on_trwCliente_cursor_changed": self.on_trwCliente_cursor_changed,
-#            "on_trewFactura_cursor_changed": self.on_trewFactura_cursor_changed,
+            "on_trewFactura_cursor_changed": self.on_trewFactura_cursor_changed,
             "on_btnTaller_clicked": self.on_btnTaller_clicked,
             "on_btnSalirtaller_clicked": self.on_btnSalirtaller_clicked,
-            "on_btnGrabarfac_clicked": self.on_btnGrabarfac_clicked
+            "on_btnGrabarfac_clicked": self.on_btnGrabarfac_clicked,
+            "on_ventanaTaller_destroy": self.on_ventanaTaller_destroy
             }
 
         b.connect_signals(dic)
@@ -99,7 +100,9 @@ class main:
             self.aviso.show()
         factura.limpiarfac(self.lbldnifac, self.entMatrifac, self.entMarcafac, self.entModelfac, self.entFechafac, self.lblidfac)
         factura.mostrar(self.listFactura, self.trewFactura)
-     
+    
+    def on_trewFactura_cursor_changed(self, widget):
+        print "hola"
 
     
     def on_trwCliente_cursor_changed(self, widget, Data=None):
