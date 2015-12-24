@@ -9,6 +9,8 @@ from conexion import bd
 
 import clientes
 
+import factura
+
 class main:
 
     def __init__(self):
@@ -35,13 +37,24 @@ class main:
         self.mailcli = b.get_object("entMail")
         self.sicli = b.get_object("rtbSi")
         self.nocli = b.get_object("rtbNo")
+        self.entMatrifac = b.get_object("entMatri")
+        self.entModelfac = b.get_object("entModel")
+        self.entFechafac = b.get_object("entFecha")
+        self.entMarcafac = b.get_object("entMarca")
+        self.lbldnifac = b.get_object("lbldnifac")
+        self.lblidfac = b.get_object("lblidfac")
         self.avisodni = b.get_object("dlgAvis")
         self.btnAceptar = b.get_object("btnAceptar")
         self.listCliente = b.get_object("listCiente")
         self.trewCliente = b.get_object("trwCliente")
+        self.listFactura = b.get_object("listFactura")
+        self.trewFactura = b.get_object("trewFactura")        
         self.btnBorrarcli = b.get_object("btnBorrarcli")
+        self.ventanaTaller = b.get_object("ventanaTaller")
+        self.btnGrabarfac = b.get_object("btnGrabarfac")
         self.ventanaPrincipal.show()
         clientes.mostrar(self.listCliente, self.trewCliente)
+        
 
         dic = {"on_btnNeocli_clicked": self.on_btnNeocli_clicked,
             "on_btnSalir_clicked": self.on_btnSalir_clicked,
@@ -53,14 +66,43 @@ class main:
             "on_btnAceptar_clicked": self.on_btnAceptar_clicked,
             "on_rbtNo_toggled": self.on_rbtNo_toggled,
             "on_btnBorrarcli_clicked": self.on_btnBorrarcli_clicked,
-            "on_trwCliente_cursor_changed": self.on_trwCliente_cursor_changed
+            "on_trwCliente_cursor_changed": self.on_trwCliente_cursor_changed,
+#            "on_trewFactura_cursor_changed": self.on_trewFactura_cursor_changed,
+            "on_btnTaller_clicked": self.on_btnTaller_clicked,
+            "on_btnSalirtaller_clicked": self.on_btnSalirtaller_clicked,
+            "on_btnGrabarfac_clicked": self.on_btnGrabarfac_clicked
             }
 
         b.connect_signals(dic)
 
-#declaracion de funciones
+#declaracion y codificacion de funciones
+    def on_btnTaller_clicked(self,  widget):
+        self.lbldnifac.set_text(self.data)
+        factura.mostrar(self.listFactura, self.trewFactura)
+        self.ventanaTaller.show()
+       
+    def on_ventanaTaller_destroy(self, widget):
+        self.ventanaTaller.hide()
+        return True
     
-    def on_trwCliente_cursor_changed(self, widget, Data = None):
+    def on_btnSalirtaller_clicked(self, widget):
+        self.ventanaTaller.hide()
+        return True
+    
+    def on_btnGrabarfac_clicked(self, widget):
+        self.dnifac = self.data
+        self.matrifac = self.entMatrifac.get_text()
+        self.marcafac = self.entMarcafac.get_text()
+        self.modelfac = self.entModelfac.get_text()
+        self.fechafac = self.entFechafac.get_text()
+        if factura.Grabarfac(self.dnifac, self.matrifac, self.marcafac, self.modelfac, self.fechafac) == False:
+            self.aviso.show()
+        factura.limpiarfac(self.lbldnifac, self.entMatrifac, self.entMarcafac, self.entModelfac, self.entFechafac, self.lblidfac)
+        factura.mostrar(self.listFactura, self.trewFactura)
+     
+
+    
+    def on_trwCliente_cursor_changed(self, widget, Data=None):
         self.seleccion = self.trewCliente.get_selection()
         model, iter = self.seleccion.get_selected()
         self.data = model[iter][0]
@@ -68,8 +110,8 @@ class main:
                             
     def on_btnBorrarcli_clicked(self, widget):
         clientes.Borrarcli(self.data)
-        clientes.mostrar(self.listCliente, self.trewCliente)
-    
+        clientes.mostrar(self.listCliente, self.trewCliente)  
+        
     def on_btnNeocli_clicked(self, widget, data=None):
         self.ventanaNeocli.show()
         self.pub = "no"
@@ -98,6 +140,7 @@ class main:
 
     def on_btnSalircli_clicked(self, widget, Data=None):
         self.ventanaNeocli.hide()
+        return True
 
     def on_rbtNo_toggled(self, widget, Data=None):
         if widget.get_active():
