@@ -20,6 +20,8 @@ class main:
         b.add_from_file("taller.glade")
         self.ventanaPrincipal = b.get_object("ventanaPrincipal")
         self.ventanaNeocli = b.get_object("ventanaNeocli")
+        self.ventanaTaller = b.get_object("ventanaTaller")
+        self.ventanaVentas = b.get_object("ventanaVentas")
         self.btnSalircli = b.get_object("btnSalircli")
         self.btnNeocli = b.get_object("btnNeocli")
         self.btnGrabcli = b.get_object("btnGrabcli")
@@ -50,8 +52,15 @@ class main:
         self.listFactura = b.get_object("listFactura")
         self.trewFactura = b.get_object("trewFactura")        
         self.btnBorrarcli = b.get_object("btnBorrarcli")
-        self.ventanaTaller = b.get_object("ventanaTaller")
         self.btnGrabarfac = b.get_object("btnGrabarfac")
+        self.btnVentas = b.get_object("btnVentas")
+        self.btnSalirven = b.get_object("btnSalirven")
+        self.lblMatriven = b.get_object("lblMatriven")
+        self.lblFacturav = b.get_object("lblFacturav")
+        self.entConce = b.get_object("entConce")
+        self.entPrecio = b.get_object("entPrecio")
+        self.trewVentas = b.get_object("trewVentas")
+        self.listaVentas = b.get_object("listaVentas")
         self.ventanaPrincipal.show()
         clientes.mostrar(self.listCliente, self.trewCliente)
         
@@ -71,18 +80,48 @@ class main:
             "on_btnTaller_clicked": self.on_btnTaller_clicked,
             "on_btnSalirtaller_clicked": self.on_btnSalirtaller_clicked,
             "on_btnGrabarfac_clicked": self.on_btnGrabarfac_clicked,
-            "on_ventanaTaller_destroy": self.on_ventanaTaller_destroy
+            "on_ventanaTaller_destroy": self.on_ventanaTaller_destroy,
+            "on_ventanaTaller_delete_event": self.on_ventanaTaller_delete_event,
+            "on_btnVentas_clicked": self.on_btnVentas_clicked,
+            "on_btnSalirven_clicked": self.on_btnSalirven_clicked,
+            "on_ventanaVentas_destroy": self.on_ventanaVentas_destroy,
+            "on_btnSalirven_delete_event": self.on_btnSalirven_delete_event,
+            "on_btnGrabarven_clicked": self.on_btnGrabarven_clicked
             }
 
         b.connect_signals(dic)
 
 #declaracion y codificacion de funciones
+    def on_btnGrabarven_clicked(self, widget, Data=None):
+        factura.Grabarven(self.matrifac, self.listaVentas, self.trewVentas)
+
+    def on_btnVentas_clicked(self, widget):
+        self.lblMatriven.set_text(self.datam)
+        self.lblFacturav.set_text(self.dataf)
+        self.ventanaVentas.show()
+        
+    def on_ventanaVentas_destroy(self, widget):
+        self.ventanaVentas.hide()
+        return True
+                    
     def on_btnTaller_clicked(self,  widget):
         self.lbldnifac.set_text(self.data)
-        factura.mostrar(self.listFactura, self.trewFactura)
+        factura.mostrar(self.listFactura, self.trewFactura, self.data)
         self.ventanaTaller.show()
+    
+    def on_btnSalirven_clicked(self, widget):
+        self.ventanaVentas.hide()
+        return True
+    
+    def on_btnSalirven_delete_event(self, widget):
+        self.ventanaVentas.hide()
+        return True    
        
     def on_ventanaTaller_destroy(self, widget):
+        self.ventanaTaller.hide()
+        return True
+    
+    def on_ventanaTaller_delete_event(self, widget, Data=None):
         self.ventanaTaller.hide()
         return True
     
@@ -99,11 +138,16 @@ class main:
         if factura.Grabarfac(self.dnifac, self.matrifac, self.marcafac, self.modelfac, self.fechafac) == False:
             self.aviso.show()
         factura.limpiarfac(self.lbldnifac, self.entMatrifac, self.entMarcafac, self.entModelfac, self.entFechafac, self.lblidfac)
-        factura.mostrar(self.listFactura, self.trewFactura)
+        factura.mostrar(self.listFactura, self.trewFactura, self.data)
     
     def on_trewFactura_cursor_changed(self, widget):
-        print "hola"
-
+        self.seleccion = self.trewFactura.get_selection()
+        model, iter = self.seleccion.get_selected()
+        self.dataf = model[iter][0]
+        self.dataf = str(self.dataf)
+        self.datam = model[iter][2]
+        self.datam = str(self.datam)
+        
     
     def on_trwCliente_cursor_changed(self, widget, Data=None):
         self.seleccion = self.trewCliente.get_selection()

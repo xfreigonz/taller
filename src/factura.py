@@ -21,11 +21,11 @@ def limpiarfac(idfac, dnifac, matrifac, marcafac, modelfac, fechafac):
     modelfac.set_text("")
     fechafac.set_text("")
    
-def mostrar(listafac, trewFactura):
+def mostrar(listafac, trewFactura, data):
     listafac.clear()
+    data = str(data)
     cursor = bd.cursor()
-    sql = """ SELECT idfac, dnifac, matrifac, marcafac, modelfac, fechafac FROM facturas ORDER BY dnifac"""
-    cursor.execute(sql)
+    cursor.execute(""" SELECT idfac, dnifac, matrifac, marcafac, modelfac, fechafac FROM facturas WHERE dnifac=?""", (data,))
     datos = cursor.fetchall()
     datos = filter(None, datos)
     for fila in datos:
@@ -34,3 +34,6 @@ def mostrar(listafac, trewFactura):
         else:
             print"error"
         trewFactura.show()
+        
+def Grabarven(matriven, listaVentas, trewVentas):
+    print "hola"
