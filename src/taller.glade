@@ -1334,8 +1334,6 @@
     <columns>
       <!-- column-name idv -->
       <column type="gint"/>
-      <!-- column-name matriv -->
-      <column type="gchararray"/>
       <!-- column-name conceptov -->
       <column type="gchararray"/>
       <!-- column-name preciov -->
@@ -1627,7 +1625,7 @@
                     <child>
                       <object class="GtkCellRendererText" id="cellrenderertext12"/>
                       <attributes>
-                        <attribute name="text">2</attribute>
+                        <attribute name="text">1</attribute>
                       </attributes>
                     </child>
                   </object>
@@ -1638,7 +1636,7 @@
                     <child>
                       <object class="GtkCellRendererText" id="cellrenderertext13"/>
                       <attributes>
-                        <attribute name="text">3</attribute>
+                        <attribute name="text">2</attribute>
                       </attributes>
                     </child>
                   </object>

@@ -60,7 +60,7 @@ class main:
         self.entConce = b.get_object("entConce")
         self.entPrecio = b.get_object("entPrecio")
         self.trewVentas = b.get_object("trewVentas")
-        self.listaVentas = b.get_object("listaVentas")
+        self.listaVentas = b.get_object("listVentas")
         self.ventanaPrincipal.show()
         clientes.mostrar(self.listCliente, self.trewCliente)
         
@@ -93,11 +93,17 @@ class main:
 
 #declaracion y codificacion de funciones
     def on_btnGrabarven_clicked(self, widget, Data=None):
-        factura.Grabarven(self.matrifac, self.listaVentas, self.trewVentas)
-
+        self.Conce = self.entConce.get_text()
+        self.Precio = self.entPrecio.get_text()
+        if factura.Grabarven(self.dataf, self.Conce, self.Precio) == False:
+            self.avisodni.show()
+        factura.limpiarven(self.entConce, self.entPrecio)
+        factura.mostrarven(self.listaVentas, self.trewVentas, self.dataf)
+        
     def on_btnVentas_clicked(self, widget):
         self.lblMatriven.set_text(self.datam)
         self.lblFacturav.set_text(self.dataf)
+        factura.mostrarven(self.listaVentas, self.trewVentas, self.dataf)
         self.ventanaVentas.show()
         
     def on_ventanaVentas_destroy(self, widget):

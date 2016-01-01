@@ -6,6 +6,8 @@
 
 from conexion import bd
 
+#modulos que manejan grabar y borrar clientes, y limpiar formularios
+# control de dni
 
 
 def Grabarcli(dni, apel, nom, dir, loc, pro, cp, mov, tel, mail, no):
