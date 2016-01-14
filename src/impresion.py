@@ -1,6 +1,4 @@
-# To change this license header, choose License Headers in Project Properties.
-# To change this template file, choose Tools | Templates
-# and open the template in the editor.
+#-*- coding: ascii -*-
 
 import os
 
@@ -18,7 +16,10 @@ def imprimir(fac,mat,dni):
         
 def header(pdf,fac,mat,dni):
     pdf.set_font('Arial','B',12)
-    pdf.cell(60,10,'TALLERAUTO',0,1,'C')
+    pdf.cell(60,10,'TALLERAUTO',0,0,'C')	
+    import time
+    fecha=time.strftime('%d/%b/%y')
+    pdf.cell(100,10,'Fecha: %s' % fecha,0,1,'R')
     pdf.set_font('Arial','',10)
     pdf.cell(60,10,'Calle Senra, 12  Marin (Pontevedra)',0,1,'L')
     pdf.cell(60,10,'36911 Tlfo: 986 882 211-656 565 918',0,1,'L')
@@ -31,13 +32,13 @@ def header(pdf,fac,mat,dni):
     cursor.execute(""" SELECT dnicli, apelcli, nomcli, dircli, poblic, procli, cpcli FROM clientes WHERE dnicli=?""", (dni,))
     datos = cursor.fetchall()
     for fila in datos:
-        pdf.cell(30,10,'%s' % fila[1],0,0,'L')
-        pdf.cell(30,10,'%s' % fila[2],0,1,'L')
-        pdf.cell(20,10,'%s' % fila[3],0,0,'L')
-        pdf.cell(50,10,'%s' % fila[4],0,0,'R')
-        pdf.cell(90,10,'Matricula Vehiculo: %s' %mat,0,1,'R')
-        pdf.cell(30,10,'%s' % fila[6],0,0,'L')
-        pdf.cell(60,10,'%s' % fila[5],0,1,'L')
+        pdf.cell(30,10,'%s' % fila[1]+', %s'%fila[2],0,1,'L')
+       # pdf.cell(30,10,'%s' % fila[2],0,1,'L')
+        pdf.cell(50,10,'Calle: %s' % fila[3],0,0,'L')
+        pdf.cell(50,10,'Poblacion: %s' % fila[4],0,0,'R')
+        pdf.cell(80,10,'Matricula Vehiculo: %s' %mat,0,1,'R')
+        pdf.cell(50,10,'CP: %s' % fila[6],0,0,'L')
+        pdf.cell(60,10,'Provincia: %s' % fila[5],0,1,'L')
     pdf.line(5,90,200,90)
     
     pdf.cell(30,10,"ID",0,0,'C')
@@ -48,11 +49,9 @@ def header(pdf,fac,mat,dni):
     datos = cursor.fetchall()
     subtotal=0;
     for fila in datos:
-        pdf.cell(30,10,'%s' % fila[0],0,0,'C')
-        pdf.cell(100,10,'%s' % fila[1],0,0,'C')
-        pdf.cell(30,10,'%s' % fila[2],0,1,'C')
+        pdf.cell(30,10,'%s' % fila[0],1,0,'C')
+        pdf.cell(100,10,'%s' % fila[1],1,0,'C')
+        pdf.cell(30,10,'%s' % fila[2],1,1,'C')
         precio=fila[2]
         subtotal=subtotal+int(precio)
-        
-    pdf.cell(170,20,'TOTAL \t',0,0,'R')
-    pdf.cell(10,20,'%s'% subtotal,0,0,'R')
+    pdf.cell(170,20,'TOTAL     %s'% subtotal+' '+chr(128),0,0,'R')
