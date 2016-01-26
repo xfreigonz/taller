@@ -26,7 +26,6 @@ def limpiarcli(dni, apel, nom, dir, loc, pro, cp, mov, tel, mail):
     dir.set_text("")
     nom.set_text("")
     loc.set_text("")
-    pro.set_text("")
     cp.set_text("")
     mov.set_text("")
     tel.set_text("")

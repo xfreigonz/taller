@@ -35,7 +35,7 @@ class main:
         self.nomcli = b.get_object("entNom")
         self.dircli = b.get_object("entDir")
         self.loccli = b.get_object("entLoc")
-        self.provcli = b.get_object("entProv")
+        self.provcli = b.get_object("cbProv")
         self.cpcli = b.get_object("entCp")
         self.movcli = b.get_object("entMov")
         self.telcli = b.get_object("entTel")
@@ -66,8 +66,12 @@ class main:
         self.listaVentas = b.get_object("listVentas")
         self.btnImprimir = b.get_object("btnImprimir")
         self.menubar = b.get_object("menubar")
+        self.listaProv=b.get_object("listaProv")
          
-        
+        self.ventanaPrincipal.maximize()
+        self.ventanaNeocli.maximize()
+        self.ventanaTaller.maximize()
+        self.ventanaVentas.maximize()
         self.ventanaPrincipal.show()
         clientes.mostrar(self.listCliente, self.trewCliente)
         
@@ -184,6 +188,7 @@ class main:
         clientes.mostrar(self.listCliente, self.trewCliente)  
         
     def on_btnNeocli_clicked(self, widget, data=None):
+        self.llenarCombo()
         self.ventanaNeocli.show()
         self.pub = "no"
 
@@ -218,6 +223,12 @@ class main:
             self.pub = "no"
         else:
             self.pub = "si"
+            
+    def llenarCombo(self):
+        cursor = bd.cursor()
+        rows=cursor.execute("SELECT provincia FROM  provincias")
+        for row in rows:
+            self.listaProv.append([row[0]])
              
     def on_btnGrabcli_clicked(self, widget):
         self.dni = self.dnicli.get_text()
@@ -225,7 +236,12 @@ class main:
         self.nom = self.nomcli.get_text()
         self.dir = self.dircli.get_text()
         self.loc = self.loccli.get_text()
-        self.prov = self.provcli.get_text()
+        
+        tree_iter = self.provcli.get_active_iter()
+        if tree_iter != None:
+            model = self.provcli.get_model()
+            self.prov = model[tree_iter][0]
+            
         self.cp = self.cpcli.get_text()
         self.mov = self.movcli.get_text()
         self.tel = self.telcli.get_text()
